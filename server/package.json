@@ -1,0 +1,25 @@
+{
+  "name": "cms",
+  "version": "1.0.0",
+  "description": "Beta CMS built with MERN",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server":"nodemon app.js",
+    "live":"node app.js"
+  },
+  "keywords": [
+    "MERN",
+    "CMS"
+  ],
+  "author": "David G.",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.24"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
