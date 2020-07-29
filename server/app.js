@@ -20,53 +20,45 @@ const schema = new mongoose.Schema({
         height: String,
         width: String
     },
-    skeleton_string: String,
-    skeleton: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true
-    }
+    skeleton: String
 });
 
 const Template = mongoose.model('Template', schema);
 
-const instance_creator = async () => {
-    const navbar = new Template({
-        id: 0,
-        name: 'Navbar',
-        styles: {
-            background: 'blue',
-            height: '100px',
-            width: '100%'
-        },
-        skeleton_string: "<div style={this.styles}> <h1>{this.name}</h1><p>{this.background}</p></div>",
-        skeleton: function() {
-            return 'hello there';
-        }
-    });
+// const instance_creator = async () => {
+//     const navbar = new Template({
+//         id: 0,
+//         name: 'Jumbotron_0',
+//         styles: {
+//             background: 'red',
+//             height: '400px',
+//             width: '100%'
+//         },
+//         skeleton: "jumbotron_v0"
+//     });
 
-    const save = await navbar.save();
-    return save;
-}
+//     const save = await navbar.save();
+//     return save;
+// }
 
 
-app.post('/api/create_component', async (req, res) => {
-    try {
-        let data = instance_creator();
-        res.send(data);
-    }
-    catch (ex) {
-        res.send(ex);
-    }
-});
+// app.post('/api/create_component', async (req, res) => {
+//     try {
+//         let data = instance_creator();
+//         res.send(data);
+//     }
+//     catch (ex) {
+//         res.send(ex);
+//     }
+// });
 
 app.get('/api/get_component', async (req, res) => {
     try {
         const component = await Template
         .findOne({
-            id: 0
+            skeleton: req.query.skeleton
         })
         .catch(ex => console.log('UNABLE TO FIND COMPONENT', ex));
-        console.log(component);
         res.send(component);
     }
 

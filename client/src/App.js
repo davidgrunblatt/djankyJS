@@ -2,42 +2,25 @@ import React from 'react';
 import './App.css';
 import axios from 'axios';
 
-// NAVBAR COMPONENT DATA / SKELETON
-// const navbar = {
-//   id: 0,
-//   name: 'navbar', 
-//   styles: {
-//     background: 'blue',
-//     height: "100px",
-//     width: '100%',
-//   },
-//   skeleton: function() {
-//     return <div style={this.styles}>
-//       <h1>{this.name}</h1>
-//       <p>{this.background}</p>
-//     </div>
-//   }
-// }
+// CMS
+// A user will be represented by an object. This user object will contain basic info + an array
+// of components (each represented by an object, containing a GUID);
+// There will be classes of components. e.g: Navbar Class.
+// When a user adds a navbar to their site, they are creating an instance of the navbar class
+// and pushing it into the user objects template array.
+// Their will be a second array which contains all the component ID's. This array will be used by 
+// the front end to iterate through and call the exporte function with the guid.
 
-// const jumbotron = {
-//   id: 1,
-//   name: 'jumbotron', 
-//   styles: {
-//     background: 'red',
-//     height: "300px",
-//     width: '100%',
-//   },
-//   skeleton: function() {
-//     return <div style={this.styles}>
-//       <h1>{this.name}</h1>
-//       <p>{this.background}</p>
-//     </div>
-//   }
-// }
+// TEMPLATE
+// Call to conditionally render components based on the retrieved array from the DB 
+// The array will contain the id's of the components that make up the template
+// iterate through the array in the return method each time calling the exporter function
+// which will render components conditionally depening on the GUID.
 
+import exporter from './skeletons/exporter';
 
 // Array of Component Skeletons
-// const objects = [ navbar, jumbotron ];
+const objects =  [ 0, 0, 1 ];
 
 // APP COMPONENT
 class App extends React.Component {
@@ -45,20 +28,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       // populate state with elements array
-      objects: []
+      objects
     }
-  }
-
-  async componentDidMount() {
-    await axios.get('/api/get_component')
-    .then(data => {
-      console.log('AXIOS RETRIEVED DATA: ', data.data);
-      let array = this.state.objects.concat(data.data);
-      this.setState({
-        objects: array
-      })
-    })
-    .catch(ex => console.log('AXIOS ERROR, ', ex));
   }
 
   render() {
@@ -66,7 +37,7 @@ class App extends React.Component {
       <div>
         { // iterate over elements array 
           this.state.objects.map(e => {
-            return JSON.parse((e.skeleton_string));
+            return exporter(e);
           }) 
         }
       </div>
