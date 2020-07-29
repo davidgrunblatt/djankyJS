@@ -25,47 +25,6 @@ const schema = new mongoose.Schema({
 
 const Template = mongoose.model('Template', schema);
 
-// const instance_creator = async () => {
-//     const navbar = new Template({
-//         id: 0,
-//         name: 'Jumbotron_0',
-//         styles: {
-//             background: 'red',
-//             height: '400px',
-//             width: '100%'
-//         },
-//         skeleton: "jumbotron_v0"
-//     });
-
-//     const save = await navbar.save();
-//     return save;
-// }
-
-
-// app.post('/api/create_component', async (req, res) => {
-//     try {
-//         let data = instance_creator();
-//         res.send(data);
-//     }
-//     catch (ex) {
-//         res.send(ex);
-//     }
-// });
-
-app.get('/api/get_component', async (req, res) => {
-    try {
-        const component = await Template
-        .findOne({
-            skeleton: req.query.skeleton
-        })
-        .catch(ex => console.log('UNABLE TO FIND COMPONENT', ex));
-        res.send(component);
-    }
-
-    catch (ex) {
-        console.log('Unable to retrieve component!', ex);
-    }
-});
 
 app.listen(port, () => {
     console.log(`App is live on server ${port}!`);
