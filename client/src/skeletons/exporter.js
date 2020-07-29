@@ -20,7 +20,7 @@ const other = <div style={ state.styles}><h1> { state.data.name }  </h1></div>;
 // EXPORTS THE COMPONENTS ABOVE DEPENDING ON GUID
 function exporter(guid) {
     if (guid === 0) return navbar;
-    else if (guid === 1) return jumbotron
+    else if (guid === 1) return jumbotron;
     else return other;
 }
 
